@@ -15,7 +15,7 @@ export class SearchBoxComponent implements OnInit {
   @Output() results: EventEmitter<SearchResult[]> = new EventEmitter<SearchResult[]>();
 
   constructor(private youtube: YoutubeService,
-    private el: ElementRef) {
+              private el: ElementRef) {
   }
 
   ngOnInit(): void {

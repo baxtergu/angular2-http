@@ -10,7 +10,7 @@ import { YoutubeSearchComponent } from './youtube-search/youtube-search.componen
 import { SearchResultComponent } from './youtube-search/search-result/search-result.component';
 import { SearchBoxComponent } from './youtube-search/search-box/search-box.component';
 
-import { YoutubeService } from './youtube-search/youtube-service/youtube.service';
+import { YoutubeService, youTubeServiceInjectables } from './youtube-search/youtube-service/youtube.service';
 
 @NgModule({
   declarations: [
@@ -26,7 +26,7 @@ import { YoutubeService } from './youtube-search/youtube-service/youtube.service
     FormsModule,
     HttpModule
   ],
-  providers: [YoutubeService],
+  providers: [YoutubeService, youTubeServiceInjectables],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

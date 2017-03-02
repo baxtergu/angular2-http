@@ -1,18 +1,16 @@
-import { Injectable } from '@angular/core';
+import { Injectable,Inject } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs'
 import { SearchResult } from '../search-result-model/search-result.model';
 
+export var YOUTUBE_API_KEY: string = 'AIzaSyDOfT_BO81aEZScosfTYMruJobmpjqNeEk';
+export var YOUTUBE_API_URL: string = 'https://www.googleapis.com/youtube/v3/search';
+
 @Injectable()
 export class YoutubeService {
-  YOUTUBE_API_KEY: string = 'AIzaSyDOfT_BO81aEZScosfTYMruJobmpjqNeEk';
-  YOUTUBE_API_URL: string = 'https://www.googleapis.com/youtube/v3/search';
-
-  apiKey = this.YOUTUBE_API_KEY;
-  apiUrl = this.YOUTUBE_API_URL;
-
-  constructor(private http: Http) {
-
+  constructor(private http: Http,
+              @Inject(YOUTUBE_API_KEY) private apiKey: string,
+              @Inject(YOUTUBE_API_URL) private apiUrl: string) {
   }
 
   search(query: string): Observable<SearchResult[]> {
@@ -27,7 +25,7 @@ export class YoutubeService {
     return this.http.get(queryUrl)
       .map((response: Response) => {
         return (<any>response.json()).items.map(item => {
-          // console.log("raw item", item); // uncomment if you want to debug
+          console.log("raw item", item); // uncomment if you want to debug
           return new SearchResult({
             id: item.id.videoId,
             title: item.snippet.title,
@@ -38,3 +36,9 @@ export class YoutubeService {
       });
   }
 }
+
+export var youTubeServiceInjectables: Array<any> = [
+  {provide: YoutubeService, useClass: YoutubeService},
+  {provide: YOUTUBE_API_KEY, useValue: YOUTUBE_API_KEY},
+  {provide: YOUTUBE_API_URL, useValue: YOUTUBE_API_URL}
+];
